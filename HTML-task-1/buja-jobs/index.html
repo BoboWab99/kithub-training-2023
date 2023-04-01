@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Buja Jobs</title>
+   <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+   <!-- 
+      
+   layout
+      - header
+         - logo
+         - navigation links
+
+      - main content
+         - hero section
+         - other sections
+
+      - footer
+         - logo
+         - quick links
+         - social media links
+
+   -->
+
+   <div class="layout">
+      <header class="layout-header">
+         <div class="container">
+            <div class="layout-header-inner">
+               <div class="logo">
+                  <a href="#">Logo</a>
+               </div>
+               
+               <nav class="navbar">
+                  <ul class="nav-list flex">
+                     <li class="nav-list-item active"><a class="nav-link" href="#">Home</a></li>
+                     <li class="nav-list-item"><a class="nav-link" href="#">Projects</a></li>
+                     <li class="nav-list-item"><a class="nav-link" href="#">About us</a></li>
+                     <li class="nav-list-item"><a class="nav-link" href="#">Contact us</a></li>
+                  </ul>
+               </nav>
+            </div>
+         </div>
+      </header>
+
+      <main class="layout-content">
+         <section class="layout-section layout-section-hero img-overlay">
+            <div class="container">
+               <h1 class="page-title">Find the best employers <br> in Bujumbura</h1>
+               <a href="#" class="button button-primary hero-link">Get started</a>
+            </div>
+         </section>
+
+         <section class="layout-section layout-section-jobs">
+            <h1 hidden>Jobs in different ...</h1>
+
+            <div class="container">
+               <div class="cards flex flex-items-equal gap-4">
+                  <div class="card p-5 radius-2 shadow-1">
+                     <h5 class="card-title">Tech</h5>
+                     <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque recusandae dolor quasi voluptatum voluptate ipsam, facere illo vitae debitis quas, architecto pariatur illum cumque suscipit, maiores unde natus dolores. Delectus quia nihil rerum! Ab minus, obcaecati ex eligendi sit, dolor animi dignissimos sunt expedita ratione sapiente, repellendus nemo delectus officia.</p>
+                     <a href="#" class="button button-primary card-link">View more</a>
+                  </div>
+                  <div class="card p-5 radius-2 shadow-1">
+                     <h5 class="card-title">Agriculture</h5>
+                     <p class="card-text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fugit optio neque officiis, illum magni eos sed omnis ut consequatur sapiente nihil quod excepturi esse dolorem hic maiores id nostrum recusandae eum laboriosam. Mollitia qui, nisi impedit illum non eius adipisci dignissimos excepturi doloremque praesentium cum tempora ea ipsum deleniti animi?</p>
+                     <a href="#" class="button button-primary card-link">View more</a>
+                  </div>
+                  <div class="card p-5 radius-2 shadow-1">
+                     <h5 class="card-title">Finance</h5>
+                     <p class="card-text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Deserunt obcaecati quaerat iusto placeat aliquid eius natus doloremque voluptas qui magni possimus reprehenderit maiores nisi voluptatibus sed laborum unde nihil alias, perferendis assumenda nesciunt est odio? Itaque illum odio aspernatur, quo ex fuga laborum quis voluptas, beatae porro incidunt amet corrupti?</p>
+                     <a href="#" class="button button-primary card-link">View more</a>
+                  </div>
+               </div>
+            </div>
+         </section>
+
+         <section class="layout-section layout-section-trends">
+            <h1 hidden>Trending this week</h1>
+
+            <div class="container">
+               <div class="flex flex-items-equal gap-4">
+               <div class="col-trending">
+                  <h1 class="section-title">Trending this week</h1>
+                  <ul class="list-trending">
+                     <li class="flex gap-3">
+                        <span class="img-holder">
+                           <img class="img-square radius-2" src="https://picsum.photos/700/300" alt="Company image">
+                        </span>
+                        <div class="text">
+                           <h6>Lumitel Burundi Ltd.</h6>
+                           <p>2 job openings</p>
+                        </div>
+                     </li>
+                     <li class="flex gap-3">
+                        <span class="img-holder">
+                           <img class="img-square radius-2" src="https://picsum.photos/1000" alt="Company image">
+                        </span>
+                        <div class="text">
+                           <h6>Ecobank, GTG branch</h6>
+                           <p>1 job openings</p>
+                        </div>
+                     </li>
+                     <li class="flex gap-3">
+                        <span class="img-holder">
+                           <img class="img-square radius-2" src="https://picsum.photos/1000" alt="Company image">
+                        </span>
+                        <div class="text">
+                           <h6>Another company LLC</h6>
+                           <p>4 job openings</p>
+                        </div>
+                     </li>
+                  </ul>
+               </div>
+
+               <div class="col-image">
+                  <span class="img-holder img-overlay radius-3">
+                     <img  class="img-hd radius-3" class="radius-3" src="res/burundi-1.jpeg" alt="">
+                  </span>
+               </div>
+               </div>
+            </div>
+         </section>
+
+         <section class="layout-section layout-section-subscribe">
+            <div class="container">
+               <h1 class="section-title">Get notified of new job postings</h1>
+               <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nulla neque corrupti ratione. Fuga, reprehenderit? Pariatur
+                  deleniti ex accusantium vero, rerum magnam iure adipisci architecto ipsum fugit aut sed alias sit?</p>
+               <form class="flex flex-center-x gap-2" action="#" method="post">
+                  <input class="form-input" type="email" name="form-email" id="form-email" placeholder="Email">
+                  <input class="form-input" type="tel" name="form-tel" id="form-tel" placeholder="Tel">
+                  <button class="button button-primary" type="submit">Subscribe</button>
+               </form>
+            </div>
+         </section>
+      </main>
+
+      <footer class="layout-footer">
+         <div class="layout-footer-main" id="contactUs">
+            <div class="container flex space-between gap-3">
+               <div class="company-info">
+                  <div class="logo mb-4">
+                     <a href="#">Logo</a>
+                  </div>
+
+                  <div class="company-info-location mb-4">
+                     <span class="d-block">Buja Jobs Inc.</span>
+                     <span class="d-block">Floor, Building name</span>
+                     <span class="d-block">Road name, Bujumbura, Burundi</span>
+                  </div>
+
+                  <nav class="company-info-contact">
+                     <a class="footer-link flex gap-2" href="mailto:info@bujajobs.com" title="Email us">
+                        <span class="icon"><i class="fa-solid fa-envelope"></i></span>
+                        <span class="text">info@bujajobs.com</span>
+                     </a>
+                     <a class="footer-link flex gap-2" href="tel:+tel:+25768123456" title="Call us">
+                        <span class="icon"><i class="fa-solid fa-phone"></i></span>
+                        <span class="text">+(257) 68 123 456</span>
+                     </a>
+                  </nav>
+               </div>
+
+               <div class="quick-links">
+                  <h4 class="mt-0">Quick links:</h4>
+                  <nav>
+                     <a class="d-block footer-link" href="#">Home</a>
+                     <a class="d-block footer-link" href="#">Projects</a>
+                     <a class="d-block footer-link" href="#">About us</a>
+                     <a class="d-block footer-link" href="#">Contact us</a>
+                  </nav>
+               </div>
+
+               <div class="social text-right">
+                  <h4 class="mt-0">Social media:</h4>
+                  
+                  <ul class="social-links flex gap-2">
+                     <li class="social-icon social-twitter">
+                        <a target="_blank" rel="external" href="https://www.facebook.com" title="Facebook">
+                           <i class="fa-brands fa-twitter"></i>
+                        </a>
+                     </li>
+                     <li class="social-icon social-facebook">
+                        <a target="_blank" rel="external" href="https://twitter.com" title="Twitter">
+                           <i class="fa-brands fa-facebook-f"></i>
+                        </a>
+                     </li>
+                     <li class="social-icon social-linkedin">
+                        <a target="_blank" rel="external" href="https://www.linkedin.com" title="Linkedin">
+                           <i class="fa-brands fa-linkedin-in"></i>
+                        </a>
+                     </li>
+                     <li class="social-icon social-instagram">
+                        <a target="_blank" rel="external" href="https://www.instagram.com" title="YouTube">
+                           <i class="fa-brands fa-instagram"></i>
+                        </a>
+                     </li>
+                     <li class="social-icon social-youtube">
+                        <a target="_blank" rel="external" href="https://www.youtube.com" title="YouTube">
+                           <i class="fa-brands fa-youtube"></i>
+                        </a>
+                     </li>
+                  </ul>
+               </div>
+            </div>
+         </div>
+
+         <div class="layout-footer-copy">
+            <div class="container">
+               <p>&copy; 2023 Buja Jobs. All rights reserved.</p>
+            </div>
+         </div>
+      </footer>
+   </div>
+
+
+   <!-- Fontawesome: online icons repository -->
+   <script src="https://kit.fontawesome.com/e307a20384.js" crossorigin="anonymous"></script>
+</body>
+</html>
