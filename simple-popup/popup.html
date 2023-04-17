@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Popup</title>
+   <link rel="stylesheet" href="./popup.css">
+</head>
+<body>
+   
+   <div class="container">
+      <h1>Click me!</h1>
+      <button class="button button-primary" data-toggle="popup" data-target="#myPopup">Open popup</button>
+      <button class="button button-primary" data-toggle="popup" data-target="#myPopup2">Open popup 2</button>
+   </div>
+
+
+   <div class="popup" id="myPopup">
+      <div class="popup-shadow">
+         <div class="popup-content">
+            <div class="popup-header">
+               <h3 class="popup-title">Popup title</h3>
+               <button class="button button-close" data-close="popup"><span>+</span></button>
+            </div>
+            <div class="popup-body">
+               <img src="https://unsplash.it/1000" alt="">
+               <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Provident, magnam ducimus. Aliquid cumque voluptate corporis deserunt consequuntur dolor excepturi tenetur!</p>
+            </div>
+            <div class="popup-footer">
+               <button class="button button-danger" data-close="popup">Close</button>
+               <button class="button button-primary">Save</button>
+            </div>
+      </div>
+      </div>
+   </div>
+   
+   <div class="popup" id="myPopup2">
+      <div class="popup-shadow">
+         <div class="popup-content">
+            <div class="popup-header">
+               <h3 class="popup-title">Popup title</h3>
+               <button class="button button-close" data-close="popup"><span>+</span></button>
+            </div>
+            <div class="popup-body">
+               <img src="https://unsplash.it/1000" alt="">
+               <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Provident, magnam ducimus. Aliquid cumque voluptate corporis deserunt consequuntur dolor excepturi tenetur!</p>
+            </div>
+            <div class="popup-footer">
+               <button class="button button-danger" data-close="popup">Close</button>
+               <button class="button button-primary">Save</button>
+            </div>
+      </div>
+      </div>
+   </div>
+
+
+   <script src="./popup.js"></script>
+
+</body>
+</html>
