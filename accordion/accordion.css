@@ -1,0 +1,31 @@
+
+
+.accordion {
+   margin-bottom: .5rem;
+   /* border: 1px solid #ccc; */
+   border-radius: .3rem;
+   box-shadow: 0 2px 7px rgb(0 0 0 / .25);
+}
+
+.accordion-title {
+   margin-block: 0;
+}
+
+.accordion-button {
+   width: 100%;
+   padding: 1rem;
+   background-color: white;
+   display: flex;
+   justify-content: space-between;
+}
+
+.accordion-body {
+   height: 0;
+   opacity: 0;
+   overflow: hidden;
+   transition: height 250ms ease-in-out, opacity 450ms ease-in-out;
+}
+
+.accordion-content {
+   padding: 1rem;
+}
