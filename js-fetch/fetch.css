@@ -1,0 +1,43 @@
+
+.fact-list-item {
+   margin-bottom: .5rem;
+   padding: 1rem;
+   border-radius: .3rem;
+   box-shadow: 0 2px 7px rgb(0 0 0 / .25);
+
+   display: flex;
+   gap: 1rem;
+}
+
+.fact-user-profile {
+   --_size: 50px;
+
+   flex: 0 0 auto;
+   height: var(--_size);
+   width: var(--_size);
+   border: 2px solid var(--color-primary);
+   color: var(--color-primary);
+   background-color: rgb(var(--color-code-primary) / .2);
+   border-radius: 50%;
+
+   display: flex;
+   align-items: center;
+   justify-content: center;
+
+   font-weight: bold;
+   font-size: 1.25rem;
+}
+
+.fact-metadata {
+   margin-top: .5rem;
+   font-weight: 500;
+}
+
+.fact-user {
+   margin-right: .3rem;
+   color: var(--color-primary);
+}
+
+.fact-created-at {
+   color: #999;
+}
