@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>TodoList App</title>
+
+   <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+
+   <header class="header">
+      <div class="container">
+         <div class="header-logo">
+            <a href="#" class="logo"><span>&#64;</span>Todo</a>
+         </div>
+         <div class="header-quote">
+            <p id="quote">Hard work beats talent when talent doesn't work hard.</p>
+         </div>
+         <div class="header-date">
+            <span class="day-of-week">Sunday</span>
+            <span class="date">May 7 - 2022</span>
+         </div>
+      </div>
+   </header>
+
+   <main class="main">
+      <div class="container">
+
+         <h1 hidden>TodoList App</h1>
+
+         <form action="" class="task-form">
+            <div class="inputs">
+               <input type="text" class="form-input" placeholder="New task">
+               <label class="form-date-picker">
+                  <input type="date">
+                  <span role="button" class="icon">
+                     <i class="fa-regular fa-calendar"></i>
+                  </span>
+               </label>
+               <div class="form-date-holder"></div>
+            </div>
+            <button type="submit" class="button button-primary">Add</button>
+         </form>
+
+         <br><br>
+
+         <ul class="task-list">
+
+            <li class="task-list-item">
+               <label class="check">
+                  <input type="checkbox">
+                  <span class="icon"><i class="fa-regular fa-circle"></i></span>
+               </label>
+
+               <div class="content">
+                  <span data-content="task">Smthg to be done</span>
+                  <div class="due-date">
+                     <i class="fa-regular fa-calendar"></i>
+                     <span data-content="date">Sat, May 6</span>
+                  </div>
+               </div>
+
+               <div class="options">
+                  <a type="button" class="button button-edit" href="#" data-toggle="popup" data-target="#editTaskPopup">
+                     <i class="fa-regular fa-pen-to-square"></i>
+                  </a>
+                  <a type="button" class="button button-delete" href="#">
+                     <i class="fa-regular fa-trash-can"></i>
+                  </a>
+               </div>
+            </li>
+
+            <li class="task-list-item">
+               <label class="check">
+                  <input type="checkbox">
+                  <span class="icon"><i class="fa-regular fa-circle"></i></span>
+               </label>
+               <div class="content">
+                  <span data-content="task">Go to mass</span>
+                  <div class="due-date">
+                     <i class="fa-regular fa-calendar"></i>
+                     <span data-content="date">Thu, Jun 15</span>
+                  </div>
+               </div>
+               <div class="options">
+                  <a type="button" class="button button-edit" href="#" data-toggle="popup" data-target="#editTaskPopup">
+                     <i class="fa-regular fa-pen-to-square"></i>
+                  </a>
+                  <a type="button" class="button button-delete" href="#">
+                     <i class="fa-regular fa-trash-can"></i>
+                  </a>
+               </div>
+            </li>
+            
+         </ul>
+
+      </div>
+   </main>
+
+
+
+   <div class="popup" id="editTaskPopup">
+      <div class="popup-shadow">
+         <form class="popup-content" action="#" method="POST">
+            <div class="popup-header">
+               <h3 class="popup-title">Edit task</h3>
+               <button class="button button-close" type="reset" data-close="popup">
+                  <span>+</span>
+               </button>
+            </div>
+
+            <div class="popup-body">
+               <label for="editTaskInput" hidden>Task description</label>
+               <input type="text" class="form-input" id="editTaskInput">
+
+               <label for="editTaskInput" hidden>Task due date</label>
+               <input type="date" class="form-input" id="editTaskDate">
+            </div>
+
+            <div class="popup-footer">
+               <button type="reset" class="button button-danger" data-close="popup">Cancel</button>
+               <button type="submit" class="button button-primary" id="editTaskSave">Save</button>
+            </div>
+         </form>
+      </div>
+   </div>
+
+
+
+   <script src="https://kit.fontawesome.com/e307a20384.js" crossorigin="anonymous"></script>
+   <script src="js/popup.js"></script>
+   <script src="js/task.js"></script>
+   
+</body>
+</html>
