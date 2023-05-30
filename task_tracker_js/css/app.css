@@ -68,7 +68,7 @@ img {
 /* generic classes */
 
 .container {
-   max-width: 900px;
+   max-width: 800px;
    padding-inline: 1rem;
    margin-inline: auto;
 }
@@ -164,7 +164,6 @@ img {
 
 
 
-
 /* task tracker styles */
 /* ------------------- */
 
@@ -220,7 +219,7 @@ img {
    font-size: 1.65rem;
    top: 0;
    right: 100%;
-   transform: translate(-.65rem, -1.75rem);
+   transform: translate(-.5rem, -1.5rem);
 }
 
 .header-date {
@@ -236,7 +235,6 @@ img {
    font-weight: bold;
    font-size: 1.15rem;
 }
-
 
 .main {
    padding-block: 3rem;
@@ -310,6 +308,10 @@ img {
 
 /* task list styles */
 /* ---------------- */
+
+.task-list {
+   padding-block: 3rem;
+}
 
 .task-list-item {
    margin-bottom: .5rem;
