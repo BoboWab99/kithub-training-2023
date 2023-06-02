@@ -59,11 +59,23 @@
             </div>
 
             <div class="popup-body">
-               <label for="editTaskInput" hidden>Task description</label>
-               <input type="text" class="form-input" id="editTaskInput">
+               <div class="form-field">
+                  <label for="editTaskInput" hidden>Task description</label>
+                  <input type="text" class="form-input" id="editTaskInput">
+               </div>
 
-               <label for="editTaskInput" hidden>Task due date</label>
-               <input type="date" class="form-input" id="editTaskDate">
+               <div class="form-field">
+                  <label for="editTaskInput" hidden>Task due date</label>
+                  <input type="date" class="form-input" id="editTaskDate">
+               </div>
+
+               <div class="form-field">
+                  <label class="check">
+                     <input type="checkbox" id="editTaskCheck">
+                     <span class="icon"><i class="fa-regular fa-circle"></i></span>
+                     <span class="check-label">Completed?</span>
+                  </label>
+               </div>
             </div>
 
             <div class="popup-footer">

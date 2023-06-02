@@ -169,8 +169,13 @@ img {
 
 .header {
    padding-block: 1rem;
-   background-color: rgb(var(--color-code-primary) / .1);
+   /* background-color: rgb(var(--color-code-primary) / .1); */
+   background-color: #f0e7f8;
    border-bottom: 1px solid var(--color-primary);
+
+   position: sticky;
+   top: 0;
+   z-index: 999;
 }
 
 .header .container {
@@ -322,11 +327,17 @@ img {
    gap: 1rem;
 }
 
-.task-list-item [type="checkbox"] {
+.check {
+   display: inline-flex;
+   align-items: center;
+   gap: 1rem;
+}
+
+.check [type="checkbox"] {
    display: none;
 }
 
-.task-list-item .check .icon {
+.check .icon {
    color: var(--color-primary);
    font-size: 1.4rem;
    display: inline-block;
@@ -335,7 +346,7 @@ img {
 }
 
 /* show checked circle if task marked as complete */
-.task-list-item [type="checkbox"]:checked + .icon::after {
+.check [type="checkbox"]:checked + .icon::after {
    position: absolute;
    content: "\f058";
    font-family: "Font Awesome 6 Free";
@@ -389,6 +400,7 @@ img {
    width: 100%;
 }
 
-#editTaskPopup [type="text"] {
-   margin-bottom: 1rem;
+#editTaskPopup .popup-body {
+   display: grid;
+   gap: 1rem;
 }

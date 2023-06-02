@@ -28,7 +28,14 @@ function addShowPopupFunc(button) {
  */
 function addClosePopopFunc(button) {
    button.addEventListener('click', () => {
-      const popup = button.closest('.popup.show')
-      popup.classList.remove('show')
+      closePopop(button.closest('.popup.show'))
    })
+}
+
+
+/**
+ * @param {HTMLElement} popup 
+ */
+function closePopop(popup) {
+   popup.classList.remove('show')
 }
