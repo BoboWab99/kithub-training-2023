@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block main-content %}
+<div class="container page-edit-task">
+   <h1>Edit task</h1>
+
+   <form method="POST" action="{{ request.path }}" class="task-form" id="taskForm">
+      {% csrf_token %}
+      <div class="inputs">
+         {% render_field form.task class+="form-input" %}
+         <label class="form-date-picker">
+            {{ form.due_date }}
+            <span role="button" class="icon">
+               <i class="fa-regular fa-calendar"></i>
+            </span>
+         </label>
+         <div class="form-date-holder"></div>
+      </div>
+      <div class="form-field">
+         <label class="check">
+            {{ form.completed }}
+            <span class="icon"><i class="fa-regular fa-circle"></i></span>
+            <span class="check-label">Completed?</span>
+         </label>
+      </div>
+      <div class="form-field">
+         <button type="submit" class="button button-primary">Update</button>
+      </div>
+   </form>
+</div>
+{% endblock main-content %}

@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block main-content %}
+<div class="container">
+   <h1 hidden>TodoList App</h1>
+
+   <form method="POST" action="{{ request.path }}" class="task-form" id="taskForm">
+      {% csrf_token %}
+      <div class="inputs">
+         {% render_field form.task class+="form-input" %}
+         <label class="form-date-picker">
+            {{ form.due_date }}
+            <span role="button" class="icon">
+               <i class="fa-regular fa-calendar"></i>
+            </span>
+         </label>
+         <div class="form-date-holder"></div>
+      </div>
+      <button type="submit" class="button button-primary">Add</button>
+   </form>
+
+   <ul class="task-list">
+      {% for task in tasks %}
+         <li class="task-list-item">
+            <label class="check" onclick="location.href='{% url 'complete-task' task.id %}'">
+               <input type="checkbox" {% if task.completed %}checked{% endif %}>
+               <span class="icon"><i class="fa-regular fa-circle"></i></span>
+            </label>
+            <div class="content">
+               {{ task.task }}
+               <div class="due-date">
+                  <i class="fa-regular fa-calendar"></i>
+                  <span>
+                     {% if task.due_date %}
+                     {{ task.due_date }}
+                     {% else %}
+                     Anytime
+                     {% endif %}
+                  </span>
+               </div>
+            </div>
+            <div class="options">
+               <a type="button" class="button button-edit" href="{% url 'edit-task' task.id %}">
+                  <i class="fa-regular fa-pen-to-square"></i>
+               </a>
+               <a type="button" class="button button-delete" href="{% url 'delete-task' task.id %}">
+                  <i class="fa-regular fa-trash-can"></i>
+               </a>
+            </div>
+         </li>
+      {% endfor %}
+   </ul>
+</div>
+{% endblock main-content %}

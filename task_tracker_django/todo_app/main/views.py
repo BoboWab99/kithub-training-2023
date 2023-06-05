@@ -62,3 +62,10 @@ def update_task(request, task_id):
       'form': EditTaskForm(instance=task),
       'greeting': 'Good morning'
    })
+
+
+def complete_task(request, task_id):
+   task = Task.objects.get(id=task_id)
+   task.completed = not task.completed
+   task.save()
+   return redirect('home-page')

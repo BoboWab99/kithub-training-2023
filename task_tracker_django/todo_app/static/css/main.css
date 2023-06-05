@@ -4,15 +4,27 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,700;1,900&display=swap');
 
+@import url("popup.css");
+
 
 /* variables */
 
 :root {
-   --color-code-primary: 108 15 184;
+   --color-code-blue: 40 70 200;
+   --color-code-teal: 16 149 149;
+   --color-code-green: 40 200 40;
+   --color-code-purple: 108 15 184;
+
+   --color-code-blue-darker: 24 51 169;
+   --color-code-teal-darker: 0 128 128;
+   --color-code-green-darker: 23 173 23;
+   --color-code-purple-darker: 79 7 139;
+
+   /* --color-code-primary: 108 15 184; */
    --color-code-danger: 200 20 24;
    --color-code-success: 16 129 6;
 
-   --color-code-primary-darker: 79 7 139;
+   /* --color-code-primary-darker: 79 7 139; */
    --color-code-danger-darker: 171 15 19;
    --color-code-success-darker: 10 82 4;
 
@@ -23,6 +35,28 @@
    --color-primary-darker: rgb(var(--color-code-primary-darker));
    --color-danger-darker: rgb(var(--color-code-danger-darker));
    --color-success-darker: rgb(var(--color-code-success-darker));
+}
+
+/* set default color to blue */
+html:not([data-theme]),
+[data-theme="blue"] {
+   --color-code-primary: var(--color-code-blue);
+   --color-code-primary-darker: var(--color-code-blue-darker);
+}
+
+[data-theme="teal"] {
+   --color-code-primary: var(--color-code-teal);
+   --color-code-primary-darker: var(--color-code-teal-darker);
+}
+
+[data-theme="green"] {
+   --color-code-primary: var(--color-code-green);
+   --color-code-primary-darker: var(--color-code-green-darker);
+}
+
+[data-theme="purple"] {
+   --color-code-primary: var(--color-code-purple);
+   --color-code-primary-darker: var(--color-code-purple-darker);
 }
 
 /* reset styles */
@@ -66,7 +100,7 @@ img {
 /* generic classes */
 
 .container {
-   max-width: 900px;
+   max-width: 800px;
    padding-inline: 1rem;
    margin-inline: auto;
 }
@@ -160,27 +194,48 @@ img {
 
 /* end::generic classes */
 
-/* task styles */
+
+
+/* task tracker styles */
+/* ------------------- */
 
 .header {
-   padding-block: 1rem;
-   background-color: #edebef;
-   border-bottom: 1px solid blue;
+   height: 6.5rem;
+   background-color: #fff;
+   border-bottom: 1px solid var(--color-primary);
+   position: sticky;
+   top: 0;
+   z-index: 999;
+}
+
+.header-inner {
+   background-color: rgb(var(--color-code-primary) / .1);
+}
+
+.header>*,
+.header>*>* {
+   height: 100%;
 }
 
 .header .container {
-   padding-block: 1rem;
+   max-width: 1200px;
    display: grid;
    grid-template-columns: 25% 1fr 25%;
+}
+
+.header-logo {
+   display: flex;
+   align-items: center;
 }
 
 .logo {
    color: #222;
    font-size: 1.75rem;
    font-weight: bold;
+   display: block;
 }
 
-.logo::first-letter {
+.logo>span {
    color: var(--color-primary);
 }
 
@@ -192,22 +247,34 @@ img {
 }
 
 .header-quote {
-   text-align: center;
-   font-size: .9rem;
-   display: grid;
+   display: flex;
    align-items: center;
-   position: relative;
+   justify-content: center;
+   text-align: center;
 }
 
-.header-quote::before {
+.header-quote>p {
+   margin: 0;
+   position: relative;
+   display: inline-block;
+}
+
+.header-quote>p::before {
    position: absolute;
    content: "\f10d";
    font-family: "Font Awesome 6 Free";
    font-weight: 900;
-   font-size: 1.75rem;
+   font-size: 1.65rem;
    top: 0;
-   left: 0;
-   transform: translate(-.5rem, -.75rem);
+   right: 100%;
+   transform: translate(-.5rem, -1.5rem);
+}
+
+.header-right {
+   display: flex;
+   align-items: center;
+   justify-content: end;
+   gap: 1.5rem;
 }
 
 .header-date {
@@ -224,6 +291,22 @@ img {
    font-size: 1.15rem;
 }
 
+.button-theme-toggle {
+   --_size: 38px;
+   width: var(--_size);
+   height: var(--_size);
+   font-size: 1.4rem;
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+   color: var(--color-primary-darker);
+   background-color: rgb(var(--color-code-primary-darker) / .2);
+   border-color: transparent;
+   border-radius: .5rem;
+}
+
+/* task form styles */
+/* --------------- */
 
 .main {
    padding-block: 3rem;
@@ -231,11 +314,12 @@ img {
 
 .task-form {
    display: flex;
+   align-items: start;
    gap: .75rem;
 }
 
-.task-form .form-input {
-   flex-grow: 1;
+.page-edit-task .task-form {
+   display: grid;
 }
 
 .task-form .form-input,
@@ -244,21 +328,99 @@ img {
    font-size: 1.25rem;
 }
 
+.task-form .form-input {
+   width: 100%;
+   padding-right: 4rem;
+}
+
+.task-form .inputs {
+   flex-grow: 1;
+   position: relative;
+}
+
+.form-date-picker {
+   position: absolute;
+   top: 2px;
+   right: 0;
+   padding-right: .5rem;
+}
+
+.form-date-picker [type="date"] {
+   width: 1px !important;
+   opacity: 0;
+   pointer-events: none;
+}
+
+.form-date-picker .icon {
+   --_size: 40px;
+   width: var(--_size);
+   height: var(--_size);
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+   cursor: pointer;
+}
+
+.form-date-holder {
+   padding-top: .5rem;
+   padding-left: 1.25rem;
+   color: var(--color-danger-darker);
+}
+
+.form-date-holder::before {
+   content: "Due: ";
+   font-weight: 700;
+}
+
+/* hide if due date is NOT set  */
+.form-date-holder:empty {
+   display: none;
+}
+
+
+/* task list styles */
+/* ---------------- */
+
+.task-list {
+   padding-block: 3rem;
+}
+
 .task-list-item {
    margin-bottom: .5rem;
    padding: 1rem;
    border-radius: .3rem;
    box-shadow: 0 2px 7px rgb(0 0 0 / .25);
-
    display: flex;
    gap: 1rem;
 }
 
-.task-list-item [type="checkbox"] {
-   --_size: 16px;
-   width: var(--_size);
-   height: var(--_size);
-   /* border-radius: 50%; */
+.check {
+   display: inline-flex;
+   align-items: center;
+   gap: 1rem;
+}
+
+.check>input {
+   display: none;
+}
+
+.check .icon {
+   color: var(--color-primary);
+   font-size: 1.4rem;
+   display: inline-block;
+   cursor: pointer;
+   position: relative;
+}
+
+/* show checked circle if task marked as complete */
+.check>input:checked+.icon::after {
+   position: absolute;
+   content: "\f058";
+   font-family: "Font Awesome 6 Free";
+   font-weight: 900;
+   top: 0;
+   left: 0;
+   z-index: 1;
 }
 
 .task-list-item .due-date {
@@ -286,4 +448,26 @@ img {
 
 .task-list-item .content {
    flex-grow: 1;
+}
+
+
+/* popup styles */
+/* --------------- */
+
+.popup-header,
+.popup-footer {
+   border: 0;
+}
+
+.popup-content {
+   min-width: 400px;
+}
+
+.popup-body {
+   display: grid;
+   gap: 1rem;
+}
+
+#editTaskPopup input {
+   width: 100%;
 }
