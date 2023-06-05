@@ -10,11 +10,21 @@
 /* variables */
 
 :root {
-   --color-code-primary: 108 15 184;
+   --color-code-blue: 40 70 200;
+   --color-code-teal: 16 149 149;
+   --color-code-green: 40 200 40;
+   --color-code-purple: 108 15 184;
+   
+   --color-code-blue-darker: 24 51 169;
+   --color-code-teal-darker: 0 128 128;
+   --color-code-green-darker: 23 173 23;
+   --color-code-purple-darker: 79 7 139;
+
+   /* --color-code-primary: 108 15 184; */
    --color-code-danger: 200 20 24;
    --color-code-success: 16 129 6;
 
-   --color-code-primary-darker: 79 7 139;
+   /* --color-code-primary-darker: 79 7 139; */
    --color-code-danger-darker: 171 15 19;
    --color-code-success-darker: 10 82 4;
 
@@ -25,6 +35,28 @@
    --color-primary-darker: rgb(var(--color-code-primary-darker));
    --color-danger-darker: rgb(var(--color-code-danger-darker));
    --color-success-darker: rgb(var(--color-code-success-darker));
+}
+
+/* set default color to blue */
+html:not([data-theme]),
+[data-theme="blue"] {
+   --color-code-primary: var(--color-code-blue);
+   --color-code-primary-darker: var(--color-code-blue-darker);
+}
+
+[data-theme="teal"] {
+   --color-code-primary: var(--color-code-teal);
+   --color-code-primary-darker: var(--color-code-teal-darker);
+}
+
+[data-theme="green"] {
+   --color-code-primary: var(--color-code-green);
+   --color-code-primary-darker: var(--color-code-green-darker);
+}
+
+[data-theme="purple"] {
+   --color-code-primary: var(--color-code-purple);
+   --color-code-primary-darker: var(--color-code-purple-darker);
 }
 
 /* reset styles */
@@ -168,21 +200,32 @@ img {
 /* ------------------- */
 
 .header {
-   padding-block: 1rem;
-   /* background-color: rgb(var(--color-code-primary) / .1); */
-   background-color: #f0e7f8;
+   height: 6.5rem;
+   background-color: #fff;
    border-bottom: 1px solid var(--color-primary);
-
    position: sticky;
    top: 0;
    z-index: 999;
 }
 
+.header-inner {
+   background-color: rgb(var(--color-code-primary) / .1);
+}
+
+.header>*,
+.header>*>* {
+   height: 100%;
+}
+
 .header .container {
    max-width: 1200px;
-   padding-block: .5rem;
    display: grid;
    grid-template-columns: 25% 1fr 25%;
+}
+
+.header-logo {
+   display: flex;
+   align-items: center;
 }
 
 .logo {
@@ -204,10 +247,10 @@ img {
 }
 
 .header-quote {
-   text-align: center;  
-   display: grid;
+   display: flex;
    align-items: center;
    justify-content: center;
+   text-align: center;  
 }
 
 .header-quote > p {
@@ -227,6 +270,13 @@ img {
    transform: translate(-.5rem, -1.5rem);
 }
 
+.header-right {
+   display: flex;
+   align-items: center;
+   justify-content: end;
+   gap: 1.5rem;
+}
+
 .header-date {
    text-align: right;
    display: grid;
@@ -241,13 +291,26 @@ img {
    font-size: 1.15rem;
 }
 
-.main {
-   padding-block: 3rem;
+.button-theme-toggle {
+   --_size: 38px;
+   width: var(--_size);
+   height: var(--_size);
+   font-size: 1.4rem;
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+   color: var(--color-primary-darker);
+   background-color: rgb(var(--color-code-primary-darker) / .2);
+   border-color: transparent;
+   border-radius: .5rem;
 }
-
 
 /* task form styles */
 /* --------------- */
+
+.main {
+   padding-block: 3rem;
+}
 
 .task-form {
    display: flex;
@@ -333,7 +396,7 @@ img {
    gap: 1rem;
 }
 
-.check [type="checkbox"] {
+.check>input {
    display: none;
 }
 
@@ -346,7 +409,7 @@ img {
 }
 
 /* show checked circle if task marked as complete */
-.check [type="checkbox"]:checked + .icon::after {
+.check>input:checked + .icon::after {
    position: absolute;
    content: "\f058";
    font-family: "Font Awesome 6 Free";
@@ -384,23 +447,23 @@ img {
 }
 
 
-/* edit form styles */
+/* popup styles */
 /* --------------- */
 
-#editTaskPopup .popup-header,
-#editTaskPopup .popup-footer {
+.popup-header,
+.popup-footer {
    border: 0;
 }
 
-#editTaskPopup .popup-content {
+.popup-content {
    min-width: 400px;
+}
+
+.popup-body {
+   display: grid;
+   gap: 1rem;
 }
 
 #editTaskPopup input {
    width: 100%;
-}
-
-#editTaskPopup .popup-body {
-   display: grid;
-   gap: 1rem;
 }

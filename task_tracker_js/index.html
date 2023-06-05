@@ -11,16 +11,23 @@
 <body>
 
    <header class="header">
-      <div class="container">
-         <div class="header-logo">
-            <a href="#" class="logo"><span>&#64;</span>Todo</a>
-         </div>
-         <div class="header-quote">
-            <p id="quote">Hard work beats talent when talent doesn't work hard.</p>
-         </div>
-         <div class="header-date">
-            <span class="day-of-week">Sunday</span>
-            <span class="date">May 7 - 2022</span>
+      <div class="header-inner">
+         <div class="container">
+            <div class="header-logo">
+               <a href="#" class="logo"><span>&#64;</span>Todo</a>
+            </div>
+            <div class="header-quote">
+               <p id="quote">Hard work beats talent when talent doesn't work hard.</p>
+            </div>
+            <div class="header-right">
+               <button type="button" class="button button-primary button-theme-toggle" title="Change Theme" data-toggle="popup" data-target="#themePopup">
+                  <span class="icon"><i class="fa-solid fa-moon"></i></span>
+               </button>
+               <div class="header-date">
+                  <span class="day-of-week">Sunday</span>
+                  <span class="date">May 7 - 2022</span>
+               </div>
+            </div>
          </div>
       </div>
    </header>
@@ -74,6 +81,55 @@
                      <input type="checkbox" id="editTaskCheck">
                      <span class="icon"><i class="fa-regular fa-circle"></i></span>
                      <span class="check-label">Completed?</span>
+                  </label>
+               </div>
+            </div>
+
+            <div class="popup-footer">
+               <button type="reset" class="button button-danger" data-close="popup">Cancel</button>
+               <button type="submit" class="button button-primary" id="editTaskSave">Save</button>
+            </div>
+         </form>
+      </div>
+   </div>
+
+   <div class="popup" id="themePopup">
+      <div class="popup-shadow">
+         <form class="popup-content" action="#" method="POST" id="appThemeForm">
+            <div class="popup-header">
+               <h3 class="popup-title">Change app theme</h3>
+               <button class="button button-close" type="reset" data-close="popup">
+                  <span>+</span>
+               </button>
+            </div>
+
+            <div class="popup-body">
+               <div class="form-field">
+                  <label class="check">
+                     <input type="radio" name="toggle-theme" value="blue">
+                     <span class="icon"><i class="fa-regular fa-circle"></i></span>
+                     <span class="check-label">Blue</span>
+                  </label>
+               </div>
+               <div class="form-field">
+                  <label class="check">
+                     <input type="radio" name="toggle-theme" value="teal">
+                     <span class="icon"><i class="fa-regular fa-circle"></i></span>
+                     <span class="check-label">Teal</span>
+                  </label>
+               </div>
+               <div class="form-field">
+                  <label class="check">
+                     <input type="radio" name="toggle-theme" value="green">
+                     <span class="icon"><i class="fa-regular fa-circle"></i></span>
+                     <span class="check-label">Green</span>
+                  </label>
+               </div>
+               <div class="form-field">
+                  <label class="check">
+                     <input type="radio" name="toggle-theme" value="purple">
+                     <span class="icon"><i class="fa-regular fa-circle"></i></span>
+                     <span class="check-label">Purple</span>
                   </label>
                </div>
             </div>

@@ -1,4 +1,5 @@
 const LOCAL_STORAGE_NAME = 'todo_app_tasks_db'
+const APP_COLOR_THEME = 'todo_app_color_theme'
 
 // show date picker
 const datePicker = document.querySelector('.form-date-picker')
@@ -6,9 +7,12 @@ const datePickerInput = datePicker.querySelector('[type="date"]')
 const datePickerIcon = datePicker.querySelector('.icon')
 const formDateHolder = document.querySelector('.form-date-holder')
 
+const themeToggleButton = document.querySelector('.button-theme-toggle')
+
 const taskList = document.querySelector('.task-list')
 const newTaskForm = document.getElementById('taskForm')
 const editTaskForm = document.getElementById('editTaskForm')
+const appThemeForm = document.getElementById('appThemeForm')
 // or ...
 // const form = document.forms.taskForm
 // const form = document.forms['taskForm']
@@ -29,6 +33,13 @@ const editTaskPopup = document.getElementById('editTaskPopup')
 
 editButtons.forEach(button => {
    addEditFunc(button)
+})
+
+themeToggleButton.addEventListener('click', () => {
+   const currentTheme = document.documentElement.getAttribute('data-theme')
+   if (currentTheme != null) {
+      document.querySelector(`[name="toggle-theme"][value="${currentTheme}"]`).checked = true
+   }
 })
 
 
@@ -139,7 +150,8 @@ function changeQuote(quotes, after) {
 changeQuote(quotes, 5000)
 
 
-// when page loads, show saved task items
+// when page loads, show saved task items, ...
+
 window.addEventListener('DOMContentLoaded', () => {
    // localStorage.clear()
    const savedTasks = getSavedTasks()
@@ -169,6 +181,12 @@ window.addEventListener('DOMContentLoaded', () => {
       const todayStringFormat = today.toISOString().split('T')[0]
       dateInput.setAttribute('min', todayStringFormat)
    })
+
+   // set color theme to saved theme
+   const appColorTheme = localStorage.getItem(APP_COLOR_THEME)
+   if (appColorTheme != null) {
+      document.documentElement.setAttribute('data-theme', appColorTheme)
+   }
 })
 
 
@@ -200,13 +218,15 @@ Task.prototype.toString = function () {
 newTaskForm.addEventListener('submit', (e) => {
    e.preventDefault()
 
+   if (newTaskForm.elements['task'].value == '') {
+      // @todo: show notification
+      return;
+   }
+
    const newTask = new Task(
       newTaskForm.elements['task'].value,
       newTaskForm.elements['due-date'].value
    )
-
-   // console.log(newTask.toString())
-   // console.log(JSON.stringify(newTask))
 
    // 1. save task
    const savedTasks = getSavedTasks()
@@ -251,6 +271,11 @@ newTaskForm.addEventListener('submit', (e) => {
 editTaskForm.addEventListener('submit', (e) => {
    e.preventDefault()
 
+   if (document.getElementById('editTaskInput').value == '') {
+      // show notification
+      return;
+   }
+
    // 1. find the task to edit
    const taskId = editTaskForm.getAttribute('data-task-id')
    const savedTasks = getSavedTasks()
@@ -281,6 +306,17 @@ editTaskForm.addEventListener('submit', (e) => {
 })
 
 
+appThemeForm.addEventListener('submit', (e) => {
+   e.preventDefault()
+
+   const newColorTheme = appThemeForm.elements['toggle-theme'].value
+   localStorage.setItem(APP_COLOR_THEME, newColorTheme)
+   document.documentElement.setAttribute('data-theme', newColorTheme)
+   closePopop(appThemeForm.closest('.popup'))
+   appThemeForm.reset()
+})
+
+
 function clearFormFields() {
    newTaskForm.elements['task'].value = ''
    newTaskForm.elements['due-date'].value = ''
@@ -300,8 +336,8 @@ function clearUpdateFormFields() {
  */
 function getSavedTasks() {
    const savedTasks = localStorage.getItem(LOCAL_STORAGE_NAME)
-   return (!savedTasks) ? [] : JSON.parse(savedTasks)
-   // if (!savedTasks) {
+   return (savedTasks == null) ? [] : JSON.parse(savedTasks)
+   // if (savedTasks == null) {
    //    return []
    // } else {
    //    return JSON.parse(savedTasks)
@@ -327,10 +363,7 @@ function makeListItem(task) {
    // create the list item and add all the functionalities
 
    const checked = (task.completed) ? "checked" : ""
-   // let checked = ""
-   // if (task.completed) {
-   //    checked = "checked"
-   // }
+   const dueDate = (task.dueDate == '') ? 'Anytime' : task.dueDate
 
    const listItemString = `
    <li class="task-list-item" data-id="task-${task.id}">
@@ -343,7 +376,7 @@ function makeListItem(task) {
          <span data-content="task">${task.task}</span>
          <div class="due-date">
             <i class="fa-regular fa-calendar"></i>
-            <span data-content="date">${task.dueDate}</span>
+            <span data-content="date">${dueDate}</span>
          </div>
       </div>
 
