@@ -1,4 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
+from django.http import JsonResponse
+
+import datetime as DT
 
 from .models import Task
 from .forms import TaskForm, EditTaskForm
@@ -6,66 +9,52 @@ from .forms import TaskForm, EditTaskForm
 # Create your views here.
 
 def home_page(request):
-   # if the form is submitted
-   if request.method == 'POST': 
-      form = TaskForm(request.POST)
-      if form.is_valid():
-         Task.objects.create(
-            task=form.cleaned_data['task'],
-            due_date=form.cleaned_data['due_date']
-         )
-         # or
-         # form.save(commit=True)
-      else:
-         print('\n\n form not valid!')
-         print(form.errors.as_text())
-
-   # get all saved tasks
-   tasks = Task.objects.all()
-
-   # completed_tasks = Task.objects.filter(completed=True)
-
    return render(request, 'index.html', {
-      'tasks': tasks,
-      'form': TaskForm(),
-      'greeting': 'Good morning'
+      'tasks': Task.objects.all(),
+      'new_form': TaskForm(),
+      'edit_form': EditTaskForm(),
+      'date_today': DT.datetime.now(),
    })
 
 
-def delete_task(request, task_id):
-   # get returns one item
-   Task.objects.get(id=task_id).delete()
-   return redirect('home-page')
+def create_task(request):
+   if not request.method == 'POST':
+      return JsonResponse({'msg': 'Not a POST request'})
+   
+   form = TaskForm(request.POST)
+   if form.is_valid():
+      new_task = Task.objects.create(
+         task=form.cleaned_data['task'],
+         due_date=form.cleaned_data['due_date']
+      )
+      return JsonResponse({'task_id': new_task.pk})
+   else:
+      return JsonResponse({'msg': form.errors.as_text()})
 
 
 def update_task(request, task_id):
-   # task to be be updated
-   task = Task.objects.get(id=task_id)
+   if not request.method == 'POST':
+      return JsonResponse({'msg': 'Not a POST request'})
+   
+   form = EditTaskForm(request.POST)
+   if form.is_valid():
+      task = Task.objects.get(id=task_id)
+      task.task = form.cleaned_data['task']
+      task.due_date = form.cleaned_data['due_date']
+      task.completed = form.cleaned_data['completed']
+      task.save()
+      return JsonResponse({'msg': 'OK!'})
+   else:
+      return JsonResponse({'msg': form.errors.as_text()})
 
-   if request.method == 'POST':
-      form = EditTaskForm(request.POST)
-      if form.is_valid():
-         # update task data
-         task.task = form.cleaned_data['task']
-         task.due_date = form.cleaned_data['due_date']
-         task.completed = form.cleaned_data['completed']
-         task.save()
-      else:
-         # print form errors
-         print('\n\n form not valid!')
-         print(form.errors.as_text())
 
-      return redirect('home-page')
-
-   # render form with existing task data
-   return render(request, 'edit-task.html', {
-      'form': EditTaskForm(instance=task),
-      'greeting': 'Good morning'
-   })
+def delete_task(request, task_id):
+   Task.objects.get(id=task_id).delete()
+   return JsonResponse({})
 
 
 def complete_task(request, task_id):
    task = Task.objects.get(id=task_id)
    task.completed = not task.completed
    task.save()
-   return redirect('home-page')
+   return JsonResponse({'completed': task.completed})

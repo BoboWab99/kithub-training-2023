@@ -20,11 +20,8 @@
    --color-code-green-darker: 23 173 23;
    --color-code-purple-darker: 79 7 139;
 
-   /* --color-code-primary: 108 15 184; */
    --color-code-danger: 200 20 24;
    --color-code-success: 16 129 6;
-
-   /* --color-code-primary-darker: 79 7 139; */
    --color-code-danger-darker: 171 15 19;
    --color-code-success-darker: 10 82 4;
 
@@ -134,7 +131,7 @@ img {
    border-radius: .3rem;
    outline: 0;
    border: 1px solid transparent;
-   transition: all .25s ease-in-out;
+   transition: all 150ms ease-in-out;
    cursor: pointer;
 }
 
@@ -152,7 +149,19 @@ img {
    border-color: var(--color-primary-darker);
 }
 
-.button-primary:focus {
+.button-primary-transparent {
+   color: var(--color-primary);
+   background-color: transparent;
+}
+
+.button-primary-transparent:hover {
+   color: var(--color-primary-darker);
+   background-color: rgb(var(--color-code-primary) / .1);
+   border-color: rgb(var(--color-code-primary) / .1);
+}
+
+.button-primary:focus,
+.button-primary-transparent:focus {
    box-shadow: 0 0 0 .25rem rgb(var(--color-code-primary) / .4);
 }
 
@@ -170,7 +179,19 @@ img {
    border-color: var(--color-danger-darker);
 }
 
-.button-danger:focus {
+.button-danger-transparent {
+   color: var(--color-danger);
+   background-color: transparent;
+}
+
+.button-danger-transparent:hover {
+   color: var(--color-danger-darker);
+   background-color: rgb(var(--color-code-danger) / .1);
+   border-color: rgb(var(--color-code-danger) / .1);
+}
+
+.button-danger:focus,
+.button-danger-transparent:focus {
    box-shadow: 0 0 0 .25rem rgb(var(--color-code-danger) / .4);
 }
 
@@ -188,7 +209,19 @@ img {
    border-color: var(--color-success-darker);
 }
 
-.button-success:focus {
+.button-success-transparent {
+   color: var(--color-success);
+   background-color: transparent;
+}
+
+.button-success-transparent:hover {
+   color: var(--color-success-darker);
+   background-color: rgb(var(--color-code-success) / .1);
+   border-color: rgb(var(--color-code-success) / .1);
+}
+
+.button-success:focus,
+.button-success-transparent:focus {
    box-shadow: 0 0 0 .25rem rgb(var(--color-code-success) / .4);
 }
 
@@ -340,7 +373,7 @@ img {
 
 .form-date-picker {
    position: absolute;
-   top: 2px;
+   top: 4px;
    right: 0;
    padding-right: .5rem;
 }
@@ -351,14 +384,16 @@ img {
    pointer-events: none;
 }
 
-.form-date-picker .icon {
-   --_size: 40px;
+.form-date-picker .icon,
+.task-list-item .options .button {
+   --_size: 35px;
+   padding: 0;
    width: var(--_size);
    height: var(--_size);
    display: inline-flex;
    align-items: center;
    justify-content: center;
-   cursor: pointer;
+   border-radius: .5rem;
 }
 
 .form-date-holder {
@@ -434,25 +469,13 @@ img {
    display: inline-flex;
 }
 
-.task-list-item .options button {
-   background-color: transparent;
-}
-
-.task-list-item .options .button-edit {
-   color: var(--color-primary);
-}
-
-.task-list-item .options .button-delete {
-   color: var(--color-danger)
-}
-
 .task-list-item .content {
    flex-grow: 1;
 }
 
 
 /* popup styles */
-/* --------------- */
+/* ------------ */
 
 .popup-header,
 .popup-footer {

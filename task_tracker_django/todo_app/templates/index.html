@@ -11,7 +11,7 @@
          {% render_field form.task class+="form-input" %}
          <label class="form-date-picker">
             {{ form.due_date }}
-            <span role="button" class="icon">
+            <span role="button" class="icon button button-primary-transparent">
                <i class="fa-regular fa-calendar"></i>
             </span>
          </label>
@@ -33,7 +33,7 @@
                   <i class="fa-regular fa-calendar"></i>
                   <span>
                      {% if task.due_date %}
-                     {{ task.due_date }}
+                     {{ task.due_date|date:"Y-m-d" }}
                      {% else %}
                      Anytime
                      {% endif %}
@@ -41,10 +41,10 @@
                </div>
             </div>
             <div class="options">
-               <a type="button" class="button button-edit" href="{% url 'edit-task' task.id %}">
+               <a type="button" class="button button-primary-transparent button-edit" href="{% url 'edit-task' task.id %}">
                   <i class="fa-regular fa-pen-to-square"></i>
                </a>
-               <a type="button" class="button button-delete" href="{% url 'delete-task' task.id %}">
+               <a type="button" class="button button-danger-transparent button-delete" href="{% url 'delete-task' task.id %}">
                   <i class="fa-regular fa-trash-can"></i>
                </a>
             </div>

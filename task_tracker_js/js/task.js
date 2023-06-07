@@ -1,13 +1,48 @@
+// *** Helper classes ***
+
+class Task {
+   /**
+    * @param {String} task task to be done
+    * @param {String} dueDate due date of the task 
+    */
+   constructor(task, dueDate, completed = false) {
+      this.id = Date.now()
+      this.task = task
+      this.dueDate = dueDate
+      this.completed = completed
+   }
+}
+
+Task.prototype.toString = function () {
+   return JSON.stringify({
+      id: this.id,
+      task: this.task,
+      dueDate: this.dueDate,
+      completed: this.completed
+   })
+}
+
+// *** end classes ***
+
+// *** global variables ***
+
 const LOCAL_STORAGE_NAME = 'todo_app_tasks_db'
 const APP_COLOR_THEME = 'todo_app_color_theme'
 
-// show date picker
 const datePicker = document.querySelector('.form-date-picker')
 const datePickerInput = datePicker.querySelector('[type="date"]')
 const datePickerIcon = datePicker.querySelector('.icon')
 const formDateHolder = document.querySelector('.form-date-holder')
 
 const themeToggleButton = document.querySelector('.button-theme-toggle')
+
+const quotes = [
+   "Hard work beats talent when talent doesn't work hard.",
+   "Concentrate all your thoughts upon the work in hand. ",
+   "Either you run the day or the day runs you.",
+   "I'm a greater believer in luck, and I find the harder I work the more I have of it.",
+   "When we strive to become better than we are, everything around us becomes better too."
+]
 
 const taskList = document.querySelector('.task-list')
 const newTaskForm = document.getElementById('taskForm')
@@ -18,6 +53,10 @@ const appThemeForm = document.getElementById('appThemeForm')
 // const form = document.forms['taskForm']
 // note: 'taskForm' is the name of the form
 
+// *** End variables ***
+
+
+// *** Event listeners ***
 
 datePickerIcon.addEventListener('click', () => {
    datePickerInput.showPicker()
@@ -27,14 +66,6 @@ datePickerInput.addEventListener('change', () => {
    formDateHolder.textContent = datePickerInput.value
 })
 
-// update task edit form values when I click "edit"
-const editButtons = document.querySelectorAll('.task-list-item .button-edit')
-const editTaskPopup = document.getElementById('editTaskPopup')
-
-editButtons.forEach(button => {
-   addEditFunc(button)
-})
-
 themeToggleButton.addEventListener('click', () => {
    const currentTheme = document.documentElement.getAttribute('data-theme')
    if (currentTheme != null) {
@@ -42,118 +73,13 @@ themeToggleButton.addEventListener('click', () => {
    }
 })
 
-
-/**
- * @param {HTMLElement} button 
- */
-function addEditFunc(button) {
-   button.addEventListener('click', () => {
-      const taskListItem = button.closest('.task-list-item')
-      const taskContent = taskListItem.querySelector('[data-content="task"]').textContent
-      const dueDate = taskListItem.querySelector('[data-content="date"]').textContent
-      const completedStatus = taskListItem.querySelector('[data-content="completed"]').checked ? true : false
-
-      const taskId = taskListItem.getAttribute('data-id').split('-')[1]
-      editTaskForm.setAttribute('data-task-id', taskId)
-
-      document.getElementById('editTaskInput').value = taskContent
-      document.getElementById('editTaskDate').value = dueDate
-      document.getElementById('editTaskCheck').checked = completedStatus
-   })
-}
-
-
 editTaskForm.addEventListener('reset', () => {
    editTaskForm.removeAttribute('data-task-id')
 })
 
-
-/**
- * @param {HTMLElement} button 
- */
-function addDeleteFunc(button) {
-   button.addEventListener('click', (e) => {
-      e.preventDefault()
-
-      // 1. find the id of list item
-      const listItem = button.closest('.task-list-item')
-      const taskId = listItem.getAttribute('data-id').split('-')[1]
-      // console.log(taskId)
-
-      // 2. remove the task that has that id from the database
-      const savedTasks = getSavedTasks()
-      const remainingTasks = savedTasks.filter(task => task.id != taskId)
-      localStorage.setItem(LOCAL_STORAGE_NAME, JSON.stringify(remainingTasks))
-
-      // 3. update the UI
-      listItem.remove()
-   })
-}
-
-
-/**
- * @param {HTMLInputElement} checkbox 
- */
-function addCompletedStatusFunc(checkbox) {
-   checkbox.addEventListener('change', () => {
-      // 1. get status
-      const completedStatus = checkbox.checked ? true : false
-
-      // 2. find the task to edit
-      const taskListItem = checkbox.closest('.task-list-item')
-      const taskId = taskListItem.getAttribute('data-id').split('-')[1]
-      const savedTasks = getSavedTasks()
-      const taskToEdit = savedTasks.find(task => task.id == taskId)
-
-      // 3. update the status
-      taskToEdit.completed = completedStatus
-
-      // 4. save the data
-      localStorage.setItem(LOCAL_STORAGE_NAME, JSON.stringify(savedTasks))
-   })
-}
-
-
-// change quote after some time
-
-const quotes = [
-   "Hard work beats talent when talent doesn't work hard.",
-   "Concentrate all your thoughts upon the work in hand. ",
-   "Either you run the day or the day runs you.",
-   "I'm a greater believer in luck, and I find the harder I work the more I have of it.",
-   "When we strive to become better than we are, everything around us becomes better too."
-]
-
-const quoteHolder = document.getElementById("quote")
-
-/**
- * @param {Array} quotes list of quotes
- * @param {Number} after change quote after {after} seconds
- */
-function changeQuote(quotes, after) {
-
-   let index = 0
-
-   const run = () => {
-      quoteHolder.innerHTML = quotes[index]
-      index = (index + 1) % quotes.length
-      // console.log('changeQuote...')
-
-      setTimeout(run, after);
-   }
-
-   setTimeout(() => {
-      run()
-   }, after);
-}
-
-changeQuote(quotes, 5000)
-
-
-// when page loads, show saved task items, ...
-
 window.addEventListener('DOMContentLoaded', () => {
-   // localStorage.clear()
+   loopQuotes(quotes, 5000)
+
    const savedTasks = getSavedTasks()
    // if there are no saved tasks
    if (savedTasks.length == 0) {
@@ -190,31 +116,6 @@ window.addEventListener('DOMContentLoaded', () => {
 })
 
 
-// handle task form submissions
-// create a Task class to make the work easy
-
-class Task {
-   /**
-    * @param {String} task task to be done
-    * @param {String} dueDate due date of the task 
-    */
-   constructor(task, dueDate, completed = false) {
-      this.id = Date.now()
-      this.task = task
-      this.dueDate = dueDate
-      this.completed = completed
-   }
-}
-
-Task.prototype.toString = function () {
-   return JSON.stringify({
-      id: this.id,
-      task: this.task,
-      dueDate: this.dueDate,
-      completed: this.completed
-   })
-}
-
 newTaskForm.addEventListener('submit', (e) => {
    e.preventDefault()
 
@@ -237,7 +138,8 @@ newTaskForm.addEventListener('submit', (e) => {
    taskList.append(makeListItem(newTask))
 
    // 3. clear form fields
-   clearFormFields()
+   newTaskForm.reset()
+   formDateHolder.innerHTML = ''
 
    // different ways of getting form data
 
@@ -272,7 +174,7 @@ editTaskForm.addEventListener('submit', (e) => {
    e.preventDefault()
 
    if (document.getElementById('editTaskInput').value == '') {
-      // show notification
+      // @todo: show notification
       return;
    }
 
@@ -284,24 +186,24 @@ editTaskForm.addEventListener('submit', (e) => {
    // 2. get new values
    const updatedTask = document.getElementById('editTaskInput').value
    const updatedDueDate = document.getElementById('editTaskDate').value
-   const updatedCompletedStatus = document.getElementById('editTaskCheck').checked ? true : false
+   const updatedComplete = document.getElementById('editTaskCheck').checked ? true : false
 
    // 3. update the values
    taskToEdit.task = updatedTask
    taskToEdit.dueDate = updatedDueDate
-   taskToEdit.completed = updatedCompletedStatus
+   taskToEdit.completed = updatedComplete
 
    // 4. save the data
    localStorage.setItem(LOCAL_STORAGE_NAME, JSON.stringify(savedTasks))
 
    // 5. update the UI
-   const taskListItem = document.querySelector(`[data-id="task-${taskId}"]`)
-   taskListItem.querySelector('[data-content="task"]').innerHTML = updatedTask
-   taskListItem.querySelector('[data-content="date"]').innerHTML = updatedDueDate
-   taskListItem.querySelector('[data-content="completed"]').checked = updatedCompletedStatus
+   const listItem = document.querySelector(`[data-id="task-${taskId}"]`)
+   listItem.querySelector('[data-content="task"]').innerHTML = updatedTask
+   listItem.querySelector('[data-content="date"]').innerHTML = (updatedDueDate == '') ? 'Anytime' : updatedDueDate
+   listItem.querySelector('[data-content="completed"]').checked = updatedComplete
 
    // 6. close popup and clear popup fields
-   clearUpdateFormFields()
+   editTaskForm.reset()
    closePopop(e.target.closest('.popup'))
 })
 
@@ -316,18 +218,93 @@ appThemeForm.addEventListener('submit', (e) => {
    appThemeForm.reset()
 })
 
+// *** End event listeners ***
 
-function clearFormFields() {
-   newTaskForm.elements['task'].value = ''
-   newTaskForm.elements['due-date'].value = ''
-   formDateHolder.innerHTML = ''
+
+// *** Functions ***
+
+/**
+ * @param {HTMLElement} button 
+ */
+function addEditFunc(button) {
+   button.addEventListener('click', (e) => {
+      e.preventDefault()
+
+      const listItem = button.closest('.task-list-item')
+      const taskContent = listItem.querySelector('[data-content="task"]').textContent
+      const dueDate = listItem.querySelector('[data-content="date"]').textContent
+      const completedStatus = listItem.querySelector('[data-content="completed"]').checked ? true : false
+
+      const taskId = listItem.getAttribute('data-id').split('-')[1]
+      editTaskForm.setAttribute('data-task-id', taskId)
+
+      document.getElementById('editTaskInput').value = taskContent
+      document.getElementById('editTaskDate').value = dueDate
+      document.getElementById('editTaskCheck').checked = completedStatus
+   })
 }
 
 
-function clearUpdateFormFields() {
-   document.getElementById('editTaskInput').value = ''
-   document.getElementById('editTaskDate').value = ''
-   document.getElementById('editTaskCheck').checked = false
+/**
+ * @param {HTMLElement} button 
+ */
+function addDeleteFunc(button) {
+   button.addEventListener('click', (e) => {
+      e.preventDefault()
+
+      // 1. find the id of list item
+      const listItem = button.closest('.task-list-item')
+      const taskId = listItem.getAttribute('data-id').split('-')[1]
+      // console.log(taskId)
+
+      // 2. remove the task that has that id from the database
+      const savedTasks = getSavedTasks()
+      const remainingTasks = savedTasks.filter(task => task.id != taskId)
+      localStorage.setItem(LOCAL_STORAGE_NAME, JSON.stringify(remainingTasks))
+
+      // 3. update the UI
+      listItem.remove()
+   })
+}
+
+
+/**
+ * @param {HTMLInputElement} checkbox 
+ */
+function addCompleteFunc(checkbox) {
+   checkbox.addEventListener('change', () => {
+      // 1. get status
+      const completedStatus = checkbox.checked ? true : false
+
+      // 2. find the task to edit
+      const taskListItem = checkbox.closest('.task-list-item')
+      const taskId = taskListItem.getAttribute('data-id').split('-')[1]
+      const savedTasks = getSavedTasks()
+      const taskToEdit = savedTasks.find(task => task.id == taskId)
+
+      // 3. update the status
+      taskToEdit.completed = completedStatus
+
+      // 4. save the data
+      localStorage.setItem(LOCAL_STORAGE_NAME, JSON.stringify(savedTasks))
+   })
+}
+
+
+/**
+ * Loops through a given list of quotes and displays them
+ * @param {Array} quotes list of quotes
+ * @param {Number} after change quote after {after} seconds
+ */
+function loopQuotes(quotes, after) {
+   let index = 0
+   const run = () => {
+      document.getElementById("quote").innerHTML = quotes[index]
+      index = (index + 1) % quotes.length
+      // console.log('changeQuote...')
+      setTimeout(run, after)
+   }
+   run()
 }
 
 
@@ -381,10 +358,10 @@ function makeListItem(task) {
       </div>
 
       <div class="options">
-         <a type="button" class="button button-edit" href="#" data-toggle="popup" data-target="#editTaskPopup">
+         <a type="button" class="button button-primary-transparent button-edit" href="#" data-toggle="popup" data-target="#editTaskPopup">
             <i class="fa-regular fa-pen-to-square"></i>
          </a>
-         <a type="button" class="button button-delete" href="#">
+         <a type="button" class="button button-danger-transparent button-delete" href="#">
             <i class="fa-regular fa-trash-can"></i>
          </a>
       </div>
@@ -398,7 +375,7 @@ function makeListItem(task) {
    addEditFunc(editButton)
    addShowPopupFunc(editButton)
    addDeleteFunc(deleteButton)
-   addCompletedStatusFunc(checkbox)
+   addCompleteFunc(checkbox)
 
    return newListItem
 }

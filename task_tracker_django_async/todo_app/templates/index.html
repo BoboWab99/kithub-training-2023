@@ -5,13 +5,13 @@
 <div class="container">
    <h1 hidden>TodoList App</h1>
 
-   <form method="POST" action="{{ request.path }}" class="task-form" id="taskForm">
+   <form method="POST" action="{% url 'create-task' %}" class="task-form" id="taskForm">
       {% csrf_token %}
       <div class="inputs">
-         {% render_field form.task class+="form-input" %}
+         {% render_field new_form.task class+="form-input" %}
          <label class="form-date-picker">
-            {{ form.due_date }}
-            <span role="button" class="icon">
+            {{ new_form.due_date }}
+            <span role="button" class="icon button button-primary-transparent">
                <i class="fa-regular fa-calendar"></i>
             </span>
          </label>
@@ -22,18 +22,18 @@
 
    <ul class="task-list">
       {% for task in tasks %}
-         <li class="task-list-item">
-            <label class="check" onclick="location.href='{% url 'complete-task' task.id %}'">
-               <input type="checkbox" {% if task.completed %}checked{% endif %}>
+         <li class="task-list-item" data-id="{{ task.id }}">
+            <label class="check">
+               <input type="checkbox" data-content="completed" {% if task.completed %}checked{% endif %}>
                <span class="icon"><i class="fa-regular fa-circle"></i></span>
             </label>
             <div class="content">
-               {{ task.task }}
+               <span data-content="task">{{ task.task }}</span>
                <div class="due-date">
                   <i class="fa-regular fa-calendar"></i>
-                  <span>
+                  <span data-content="date">
                      {% if task.due_date %}
-                     {{ task.due_date }}
+                     {{ task.due_date|date:"Y-m-d" }}
                      {% else %}
                      Anytime
                      {% endif %}
@@ -41,10 +41,10 @@
                </div>
             </div>
             <div class="options">
-               <a type="button" class="button button-edit" href="{% url 'edit-task' task.id %}">
+               <a role="button" class="button button-primary-transparent button-edit" href="#" data-toggle="popup" data-target="#editTaskPopup">
                   <i class="fa-regular fa-pen-to-square"></i>
                </a>
-               <a type="button" class="button button-delete" href="{% url 'delete-task' task.id %}">
+               <a role="button" class="button button-danger-transparent button-delete" href="#">
                   <i class="fa-regular fa-trash-can"></i>
                </a>
             </div>
@@ -53,3 +53,94 @@
    </ul>
 </div>
 {% endblock main-content %}
+
+{% block popups %}
+<div class="popup" id="editTaskPopup">
+   <div class="popup-shadow">
+      <form class="popup-content" action="#" method="POST" id="editTaskForm">
+         {% csrf_token %}
+
+         <div class="popup-header">
+            <h3 class="popup-title">Edit task</h3>
+            <button class="button button-close" type="reset" data-close="popup">
+               <span>+</span>
+            </button>
+         </div>
+
+         <div class="popup-body">
+            <div class="form-field">
+               {% comment %} use 'auto_id' or 'id_for_label' {% endcomment %}
+               {% comment %} Reference: https://pypi.org/project/django-widget-tweaks/ {% endcomment %}
+               <label for="{{ edit_form.task.auto_id }}" hidden>Task description</label>
+               {{ edit_form.task|add_class:"form-input" }}
+            </div>
+            <div class="form-field">
+               <label for="{{ edit_form.due_date.auto_id }}" hidden>Task due date</label>
+               {{ edit_form.due_date|add_class:"form-input" }}
+            </div>
+            <div class="form-field">
+               <label class="check">
+                  {{ edit_form.completed }}
+                  <span class="icon"><i class="fa-regular fa-circle"></i></span>
+                  <span class="check-label">Completed?</span>
+               </label>
+            </div>
+         </div>
+
+         <div class="popup-footer">
+            <button type="reset" class="button button-danger" data-close="popup">Cancel</button>
+            <button type="submit" class="button button-primary" id="editTaskSave">Save</button>
+         </div>
+      </form>
+   </div>
+</div>
+
+<div class="popup" id="themePopup">
+   <div class="popup-shadow">
+      <form class="popup-content" action="#" method="POST" id="appThemeForm">
+         <div class="popup-header">
+            <h3 class="popup-title">Change app theme</h3>
+            <button class="button button-close" type="reset" data-close="popup">
+               <span>+</span>
+            </button>
+         </div>
+
+         <div class="popup-body">
+            <div class="form-field">
+               <label class="check">
+                  <input type="radio" name="toggle-theme" value="blue">
+                  <span class="icon"><i class="fa-regular fa-circle"></i></span>
+                  <span class="check-label">Blue</span>
+               </label>
+            </div>
+            <div class="form-field">
+               <label class="check">
+                  <input type="radio" name="toggle-theme" value="teal">
+                  <span class="icon"><i class="fa-regular fa-circle"></i></span>
+                  <span class="check-label">Teal</span>
+               </label>
+            </div>
+            <div class="form-field">
+               <label class="check">
+                  <input type="radio" name="toggle-theme" value="green">
+                  <span class="icon"><i class="fa-regular fa-circle"></i></span>
+                  <span class="check-label">Green</span>
+               </label>
+            </div>
+            <div class="form-field">
+               <label class="check">
+                  <input type="radio" name="toggle-theme" value="purple">
+                  <span class="icon"><i class="fa-regular fa-circle"></i></span>
+                  <span class="check-label">Purple</span>
+               </label>
+            </div>
+         </div>
+
+         <div class="popup-footer">
+            <button type="reset" class="button button-danger" data-close="popup">Cancel</button>
+            <button type="submit" class="button button-primary" id="editTaskSave">Save</button>
+         </div>
+      </form>
+   </div>
+</div>
+{% endblock popups %}
